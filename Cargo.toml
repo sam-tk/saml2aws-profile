@@ -1,0 +1,14 @@
+[package]
+name = "saml2aws-profile"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "^0.4.19"
+clap = { version = "^3.1.6", features = ["derive","env"] }
+dirs = "^4.0.0"
+itertools = "^0.10.3"
+prettytable-rs = "^0.8.0"
+rust-ini = "^0.18.0"
