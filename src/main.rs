@@ -3,15 +3,20 @@ use chrono::{Local, DateTime};
 
 #[macro_use]extern crate prettytable;
 use prettytable::{Table, format};
+use std::env;
+use std::path::PathBuf;
 
 fn main() {
     let mut table = Table::new();
     table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
     table.set_titles(row!["AWS_PROFILE","⏰","Expire Time","AWS Account","Rolename"]);
 
-    // TODO: 環境変数をチェックする env "AWS_SHARED_CREDENTIALS_FILE"
     let mut cred_file = dirs::home_dir().unwrap();
     cred_file.push(".aws/credentials") ; 
+    let cred_file = match env::var_os("AWS_SHARED_CREDENTIALS_FILE") {
+        Some(v) => PathBuf::from(v),
+        None => cred_file
+    };
 
     let cred = match Ini::load_from_file(cred_file) {
         Ok(ini) => ini,
@@ -59,4 +64,3 @@ fn main() {
     table.printstd();
     // TODO: exit codeを考慮しなくてもよい?
 }
-
